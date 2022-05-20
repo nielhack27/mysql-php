@@ -62,12 +62,16 @@
             <div class='text-success border border-success py-2 text-center rounded'>
                 <p>Successfully Register... <br/><small>Redirecting,Please Wait!</small></p>
             </div>
-        <?php }else{ ?>
+        <?php }else{ 
+                if(isset($notify)){
+            ?>
             <div class='text-danger border border-danger py-2 text-center rounded'>
-                <?php echo $notify; ?>
+                            
+                        echo $notify; 
+                  
             </div>
         <?php
-        } ?>
+        } }?>
 
         <div class="form-floating my-2">
             <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
