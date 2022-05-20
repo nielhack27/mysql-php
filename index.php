@@ -1,3 +1,14 @@
+<?php
+    include "./config/db.php";
+    $con=auth();
+    if(isset($_SESSION['user_id'])){
+        $id=$_SESSION['user_id'];
+        $sql="SELECT email FROM users WHERE user_id='$id'";
+        $data = $con->query($sql) or die($con->error);
+        $details = $data->fetch_assoc();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,10 +35,18 @@
           <input type="search" class="form-control form-control-dark text-white bg-dark" placeholder="Search..." aria-label="Search">
         </form>
 
+        <?php if(!isset($_SESSION['user_id'])){?>
         <div class="text-end">
           <a href="./auth/login.php" class="btn btn-outline-light me-2">Login</a>
           <a href="./auth/register.php" class="btn btn-warning">Sign-up</a>
         </div>
+        <?php }else{
+        ?>
+            <div class="text-end">
+            <a href="./" class="btn btn-outline-light me-2"><?php echo $details['email']?></a>
+                <a href="./auth/logout.php" class="btn btn-warning">LOGOUT</a>
+            </div>
+        <?php } ?>
       </div>
     </div>
   </header>

@@ -1,8 +1,19 @@
 <?php
     include "../config/db.php";
     $con=auth();
-
-
+    if(isset($_POST['isLogin'])){
+        $email=$_POST['email'];
+        $pass1=$_POST['password'];
+        $sql = "SELECT user_id FROM users WHERE email='$email' AND password='$pass1'";
+        $data = $con->query($sql) or die($con->error);
+        $details = $data->fetch_assoc();
+        if(isset($details)){
+            do{
+                $_SESSION['user_id']=$details['user_id'];
+            }while($details = $data->fetch_assoc());
+            echo header('location:../');
+        }
+    }
 ?>
 
 

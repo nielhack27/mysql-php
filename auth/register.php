@@ -12,6 +12,7 @@
             if(!isset($details['email'])){
                 $sql = "INSERT INTO users VALUES ('','$email','$pass1')";
                 $con->query($sql) or die($con->error);
+                echo header('location:./login.php');
             }else{
                 echo "email already exist";
             }
@@ -48,7 +49,7 @@
 
             <div class="text-end">
             <a href="../" class="btn btn-outline-light me-2">Home</a>
-            <a href="./register.php" class="btn btn-warning">Sign-up</a>
+            <a href="./login.php" class="btn btn-warning">Login</a>
             </div>
         </div>
         </div>
