@@ -1,6 +1,7 @@
 <?php
     include "../config/db.php";
     $con=auth();
+    unset($_SESSION['register_notification']);
     if(isset($_POST['isLogin'])){
         $email=$_POST['email'];
         $pass1=$_POST['password'];
@@ -11,7 +12,7 @@
             do{
                 $_SESSION['user_id']=$details['user_id'];
             }while($details = $data->fetch_assoc());
-            echo header('location:../');
+            echo header("Refresh: 3; URL=../");
         }
     }
 ?>
@@ -51,12 +52,26 @@
     <form method="POST">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-        <div class="form-floating">
-        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
+        <?php 
+            if(isset($_POST['isLogin'])){
+                if(isset($_SESSION['user_id'])){?>
+                <div class='text-success border border-success py-1 my-1 text-center rounded'>
+                    Successfully Login... <br/><small>Redirecting,Please Wait!</small>
+                </div>
+        <?php }else{ ?>
+            <div class='text-danger border border-danger py-2 text-center rounded'>
+                Account does`nt Exist!!
+            </div>
+        <?php }
+            }
+        ?>
+
+        <div class="form-floating my-1">
+            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
         </div>
-        <div class="form-floating">
-        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <div class="form-floating my-1">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
         <label for="floatingPassword">Password</label>
         </div>
 

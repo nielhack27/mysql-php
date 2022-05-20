@@ -74,29 +74,6 @@
     </div>
   </header>
   <main class='mt-3 w-100'>
-    
-    <table class='center w-75 rounded m-auto'>
-    <tr class='border bg-success'>
-      <th colspan="1" class='text-center'>Email</th>
-      <th colspan="1" class='text-center'>Blood Type</th>
-      <th colspan="1" class='text-center'>Request</th>
-    </tr>
-    <tr>
-      <td colspan="1" class='text-center'>Centro comercial </td>
-      <td colspan="1" class='text-center'>Francisco Chang</td>
-      <td colspan="1" class='text-center'>Mexico</td>
-    </tr>
-    <tr>
-      <td colspan="1" class='text-center'>Centro comercial </td>
-      <td colspan="1" class='text-center'>Francisco Chang</td>
-      <td colspan="1" class='text-center'>Mexico</td>
-    </tr>
-    <tr>
-      <td colspan="1" class='text-center'>Centro comercial </td>
-      <td colspan="1" class='text-center'>Francisco Chang</td>
-      <td colspan="1" class='text-center'>Mexico</td>
-    </tr>
-    </table>
   </main>
 </body>
 </html>

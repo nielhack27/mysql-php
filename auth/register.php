@@ -5,17 +5,21 @@
         $email=$_POST['email'];
         $pass1=$_POST['password'];
         $pass2=$_POST['confirm_password'];
+        $blood_type=$_POST['blood_type'];
         if(strlen(trim($email))!=0 && strlen(trim($pass2))!=0 && strlen(trim($pass1))!=0 && $pass1==$pass2){
             $sql_check_email_exist = "SELECT * FROM `users` WHERE email = '$email'";
             $data = $con->query($sql_check_email_exist) or die($con->error);
             $details = $data->fetch_assoc();
             if(!isset($details['email'])){
-                $sql = "INSERT INTO users VALUES ('','$email','$pass1')";
+                $sql = "INSERT INTO users VALUES ('','$email','$pass1','$blood_type')";
                 $con->query($sql) or die($con->error);
-                echo header('location:./login.php');
+                $_SESSION['register_notification']=True;
+                echo header("Refresh: 3; URL=./login.php");
             }else{
-                echo "email already exist";
+                $notify = "email already exist";
             }
+        }else{
+            $notify ="Password and Confirm password is not matched!!";
         }
     }
 ?>
@@ -35,9 +39,6 @@
     <header class="p-3 bg-dark text-white">
         <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
-            </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <h5><a href="../" class="nav-link px-2 text-secondary">Blood Finder</a></h5>
@@ -57,24 +58,45 @@
     <main class="form-signin w-50 m-auto my-5">
     <form method="POST">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <?php if(isset($_SESSION['register_notification'])){?>
+            <div class='text-success border border-success py-2 text-center rounded'>
+                <p>Successfully Register... <br/><small>Redirecting,Please Wait!</small></p>
+            </div>
+        <?php }else{ ?>
+            <div class='text-danger border border-danger py-2 text-center rounded'>
+                <?php echo $notify; ?>
+            </div>
+        <?php
+        } ?>
 
-        <div class="form-floating">
-        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
+        <div class="form-floating my-2">
+            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+            <label for="floatingInput">Email address</label>
         </div>
-        <div class="form-floating">
-        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
+        <div class="form-floating my-2">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+            <label for="floatingPassword">Password</label>
         </div>
-        <div class="form-floating">
-        <input type="password" name="confirm_password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Confirm password</label>
+        <div class="form-floating my-2">
+            <input type="password" name="confirm_password" class="form-control" id="floatingPassword" placeholder="Password" required>
+            <label for="floatingPassword">Confirm password</label>
+        </div>
+        <div class="my-2">
+            <select name="blood_type" class='rounded'>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
         </div>
 
         <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" name="isRegister" type="submit">Register</button>
         <p class="mt-5 mb-3 text-center text-muted">&copy; 2022– <?php echo date("Y"); ?></p>
