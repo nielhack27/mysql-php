@@ -1,19 +1,20 @@
 <?php
     include "../config/db.php";
     $con=auth();
+    remove_session('');
     if(isset($_POST['isRegister'])){
         $email=$_POST['email'];
+        $name=$_POST['name'];
+        $address=$_POST['address'];
         $pass1=$_POST['password'];
         $pass2=$_POST['confirm_password'];
-        $blood_type=$_POST['blood_type'];
-        if(strlen(trim($email))!=0 && strlen(trim($pass2))!=0 && strlen(trim($pass1))!=0 && $pass1==$pass2){
+        if(strlen(trim($email))!=0 && strlen(trim($address))!=0 &&strlen(trim($name))!=0 && strlen(trim($pass2))!=0 && strlen(trim($pass1))!=0 && $pass1==$pass2){
             $sql_check_email_exist = "SELECT * FROM `users` WHERE email = '$email'";
             $data = $con->query($sql_check_email_exist) or die($con->error);
             $details = $data->fetch_assoc();
             if(!isset($details['email'])){
-                $sql = "INSERT INTO users VALUES ('','$email','$pass1','$blood_type')";
+                $sql = "INSERT INTO users VALUES ('','$email','$name','$address','$pass1')";
                 $con->query($sql) or die($con->error);
-                $_SESSION['register_notification']=True;
                 echo header("Refresh: 3; URL=./login.php");
             }else{
                 $notify = "email already exist";
@@ -44,10 +45,6 @@
             <h5><a href="../" class="nav-link px-2 text-secondary">Blood Finder</a></h5>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input type="search" class="form-control form-control-dark text-white bg-dark" placeholder="Search..." aria-label="Search">
-            </form>
-
             <div class="text-end">
             <a href="../" class="btn btn-outline-light me-2">Home</a>
             <a href="./login.php" class="btn btn-warning">Login</a>
@@ -58,7 +55,7 @@
     <main class="form-signin w-50 m-auto my-5">
     <form method="POST">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-        <?php if(isset($_SESSION['register_notification'])){?>
+        <?php if(!isset($notify) && isset($_POST['isRegister'])){?>
             <div class='text-success border border-success py-2 text-center rounded'>
                 <p>Successfully Register... <br/><small>Redirecting,Please Wait!</small></p>
             </div>
@@ -75,7 +72,15 @@
 
         <div class="form-floating my-2">
             <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
-            <label for="floatingInput">Email address</label>
+            <label for="floatingInput">Email</label>
+        </div>
+        <div class="form-floating my-2">
+            <input type="text" name="name" class="form-control" id="floatingInput" placeholder="Juan Dela Cruz" required>
+            <label for="floatingInput">Full Name</label>
+        </div>
+        <div class="form-floating my-2">
+            <input type="text" name="address" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+            <label for="floatingInput">Address</label>
         </div>
         <div class="form-floating my-2">
             <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
@@ -85,17 +90,6 @@
             <input type="password" name="confirm_password" class="form-control" id="floatingPassword" placeholder="Password" required>
             <label for="floatingPassword">Confirm password</label>
         </div>
-        <div class="my-2">
-            <select name="blood_type" class='rounded'>
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-            </select>
-        </div>
 
         <div class="checkbox mb-3">
             <label>
@@ -103,7 +97,7 @@
             </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" name="isRegister" type="submit">Register</button>
-        <p class="mt-5 mb-3 text-center text-muted">&copy; 2022– <?php echo date("Y"); ?></p>
+        <p class="mt-5 mb-3 text-center text-muted">&copy; BLOOD FINDER 2022– <?php echo date("Y"); ?></p>
     </form>
     </main>
 </body>

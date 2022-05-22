@@ -1,4 +1,5 @@
 <?php
+    include $_SERVER['DOCUMENT_ROOT']."/joniel_php/mysql-php/config/remove_session.php";
     SESSION_START();
     function auth(){
         $hostname='localhost';

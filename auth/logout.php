@@ -1,5 +1,6 @@
 <?php
     include "../config/db.php";
-    unset($_SESSION['user_id']);
+    session_unset();
+    remove_session('');
     echo header('location:./login.php');
 ?>

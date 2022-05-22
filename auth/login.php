@@ -1,7 +1,7 @@
 <?php
     include "../config/db.php";
     $con=auth();
-    unset($_SESSION['register_notification']);
+    remove_session('');
     if(isset($_POST['isLogin'])){
         $email=$_POST['email'];
         $pass1=$_POST['password'];
@@ -12,7 +12,7 @@
             do{
                 $_SESSION['user_id']=$details['user_id'];
             }while($details = $data->fetch_assoc());
-            echo header("Refresh: 3; URL=../");
+            echo header("Refresh: 2; URL=../");
         }
     }
 ?>
@@ -36,10 +36,6 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <h5><a href="../" class="nav-link px-2 text-secondary">Blood Finder</a></h5>
             </ul>
-
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input type="search" class="form-control form-control-dark text-white bg-dark" placeholder="Search..." aria-label="Search">
-            </form>
 
             <div class="text-end">
             <a href="../" class="btn btn-outline-light me-2">Home</a>
@@ -70,9 +66,9 @@
             <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput">Email address</label>
         </div>
-            <div class="form-floating my-1">
+        <div class="form-floating my-1">
             <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
+            <label for="floatingPassword">Password</label>
         </div>
 
         <div class="checkbox mb-3">
@@ -81,7 +77,7 @@
         </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" name="isLogin" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-center text-muted">&copy; 2022– <?php echo date("Y"); ?></p>
+        <p class="mt-5 mb-3 text-center text-muted">&copy; BLOOD FINDER | 2022– <?php echo date("Y"); ?></p>
     </form>
     </main>
 </body>
